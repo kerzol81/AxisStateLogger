@@ -11,17 +11,17 @@ logger = logging.getLogger()
 class Axis:
     """ Axis camera class representing the state by pulling an image from the camera"""
 
-    def __init__(self, ip='192.168.0.90', username='root', password='root', name='Axis'):
+    def __init__(self, ip='192.168.0.90', username='root', password='root', id='Axis'):
         self.ip = ip
         self.username = username
         self.password = password
-        self.name = name
+        self.id = id
         self.base_url = 'http://{}:{}@{}/axis-cgi/'.format(username, password, ip)
         self.state = None
-        self.get_state()
+        self.restart_if_no_http()
 
     def __str__(self):
-        return '{} {} {}'.format(self.name, self.ip, self.state)
+        return '{} {} {}'.format(self.id, self.ip, self.state)
 
     def get_state(self):
         try:
@@ -54,3 +54,6 @@ class Axis:
         self.get_state()
         if self.state == 'offline':
             self.restart()
+
+
+a = Axis(ip='192.168.0.100', username='root', password='root', id='DoorCamera')
